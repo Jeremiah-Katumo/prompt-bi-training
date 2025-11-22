@@ -1,0 +1,384 @@
+2025-11-22 17:21:02,200 — INFO — ETL Job Started
+2025-11-22 17:21:02,200 — INFO — Extracting tables...
+2025-11-22 17:28:03,567 — INFO — ETL started.
+2025-11-22 17:28:03,568 — INFO — Creating DB engine.
+2025-11-22 17:28:03,575 — INFO — Starting data extraction.
+2025-11-22 17:28:03,641 — ERROR — ETL failed: (pymysql.err.OperationalError) (1045, "Access denied for user 'root'@'localhost' (using password: YES)")
+(Background on this error at: https://sqlalche.me/e/14/e3q8)
+Traceback (most recent call last):
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 3371, in _wrap_pool_connect
+    return fn()
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/sqlalchemy/pool/base.py", line 327, in connect
+    return _ConnectionFairy._checkout(self)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/sqlalchemy/pool/base.py", line 894, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/sqlalchemy/pool/base.py", line 493, in checkout
+    rec = pool._do_get()
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/sqlalchemy/pool/impl.py", line 145, in _do_get
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/sqlalchemy/util/langhelpers.py", line 70, in __exit__
+    compat.raise_(
+    ~~~~~~~~~~~~~^
+        exc_value,
+        ^^^^^^^^^^
+        with_traceback=exc_tb,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/sqlalchemy/util/compat.py", line 211, in raise_
+    raise exception
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/sqlalchemy/pool/impl.py", line 143, in _do_get
+    return self._create_connection()
+           ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/sqlalchemy/pool/base.py", line 273, in _create_connection
+    return _ConnectionRecord(self)
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/sqlalchemy/pool/base.py", line 388, in __init__
+    self.__connect()
+    ~~~~~~~~~~~~~~^^
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/sqlalchemy/pool/base.py", line 690, in __connect
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/sqlalchemy/util/langhelpers.py", line 70, in __exit__
+    compat.raise_(
+    ~~~~~~~~~~~~~^
+        exc_value,
+        ^^^^^^^^^^
+        with_traceback=exc_tb,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/sqlalchemy/util/compat.py", line 211, in raise_
+    raise exception
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/sqlalchemy/pool/base.py", line 686, in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+                                         ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/sqlalchemy/engine/create.py", line 574, in connect
+    return dialect.connect(*cargs, **cparams)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/sqlalchemy/engine/default.py", line 598, in connect
+    return self.dbapi.connect(*cargs, **cparams)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/pymysql/connections.py", line 361, in __init__
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/pymysql/connections.py", line 669, in connect
+    self._request_authentication()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/pymysql/connections.py", line 957, in _request_authentication
+    auth_packet = self._read_packet()
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/pymysql/connections.py", line 775, in _read_packet
+    packet.raise_for_error()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/pymysql/protocol.py", line 219, in raise_for_error
+    err.raise_mysql_exception(self._data)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/pymysql/err.py", line 150, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.OperationalError: (1045, "Access denied for user 'root'@'localhost' (using password: YES)")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/tmp/ipykernel_7238/3551417702.py", line 397, in run_etl
+    (orders, items, refunds, sessions, pageviews, products, users) = extract(engine)
+                                                                     ~~~~~~~^^^^^^^^
+  File "/tmp/ipykernel_7238/3551417702.py", line 89, in extract
+    with engine.connect() as conn:
+         ~~~~~~~~~~~~~~^^
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 3325, in connect
+    return self._connection_cls(self, close_with_result=close_with_result)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 96, in __init__
+    else engine.raw_connection()
+         ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 3404, in raw_connection
+    return self._wrap_pool_connect(self.pool.connect, _connection)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 3374, in _wrap_pool_connect
+    Connection._handle_dbapi_exception_noconnection(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, dialect, self
+        ^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 2208, in _handle_dbapi_exception_noconnection
+    util.raise_(
+    ~~~~~~~~~~~^
+        sqlalchemy_exception, with_traceback=exc_info[2], from_=e
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/sqlalchemy/util/compat.py", line 211, in raise_
+    raise exception
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 3371, in _wrap_pool_connect
+    return fn()
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/sqlalchemy/pool/base.py", line 327, in connect
+    return _ConnectionFairy._checkout(self)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/sqlalchemy/pool/base.py", line 894, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/sqlalchemy/pool/base.py", line 493, in checkout
+    rec = pool._do_get()
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/sqlalchemy/pool/impl.py", line 145, in _do_get
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/sqlalchemy/util/langhelpers.py", line 70, in __exit__
+    compat.raise_(
+    ~~~~~~~~~~~~~^
+        exc_value,
+        ^^^^^^^^^^
+        with_traceback=exc_tb,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/sqlalchemy/util/compat.py", line 211, in raise_
+    raise exception
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/sqlalchemy/pool/impl.py", line 143, in _do_get
+    return self._create_connection()
+           ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/sqlalchemy/pool/base.py", line 273, in _create_connection
+    return _ConnectionRecord(self)
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/sqlalchemy/pool/base.py", line 388, in __init__
+    self.__connect()
+    ~~~~~~~~~~~~~~^^
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/sqlalchemy/pool/base.py", line 690, in __connect
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/sqlalchemy/util/langhelpers.py", line 70, in __exit__
+    compat.raise_(
+    ~~~~~~~~~~~~~^
+        exc_value,
+        ^^^^^^^^^^
+        with_traceback=exc_tb,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/sqlalchemy/util/compat.py", line 211, in raise_
+    raise exception
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/sqlalchemy/pool/base.py", line 686, in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+                                         ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/sqlalchemy/engine/create.py", line 574, in connect
+    return dialect.connect(*cargs, **cparams)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/sqlalchemy/engine/default.py", line 598, in connect
+    return self.dbapi.connect(*cargs, **cparams)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/pymysql/connections.py", line 361, in __init__
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/pymysql/connections.py", line 669, in connect
+    self._request_authentication()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/pymysql/connections.py", line 957, in _request_authentication
+    auth_packet = self._read_packet()
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/pymysql/connections.py", line 775, in _read_packet
+    packet.raise_for_error()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/pymysql/protocol.py", line 219, in raise_for_error
+    err.raise_mysql_exception(self._data)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/pymysql/err.py", line 150, in raise_mysql_exception
+    raise errorclass(errno, errval)
+sqlalchemy.exc.OperationalError: (pymysql.err.OperationalError) (1045, "Access denied for user 'root'@'localhost' (using password: YES)")
+(Background on this error at: https://sqlalche.me/e/14/e3q8)
+2025-11-22 17:28:32,741 — INFO — ETL started.
+2025-11-22 17:28:32,743 — INFO — Creating DB engine.
+2025-11-22 17:28:32,745 — INFO — Starting data extraction.
+2025-11-22 17:28:32,980 — ERROR — Failed to read SQL: SELECT * FROM orders;
+Traceback (most recent call last):
+  File "/tmp/ipykernel_7238/926352943.py", line 77, in safe_read_sql
+    return pd.read_sql_query(text(sql), conn)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/pandas/io/sql.py", line 528, in read_sql_query
+    return pandas_sql.read_query(
+           ~~~~~~~~~~~~~~~~~~~~~^
+        sql,
+        ^^^^
+    ...<6 lines>...
+        dtype_backend=dtype_backend,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/pandas/io/sql.py", line 2728, in read_query
+    cursor = self.execute(sql, params)
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/pandas/io/sql.py", line 2660, in execute
+    raise TypeError("Query must be a string unless using sqlalchemy.")
+TypeError: Query must be a string unless using sqlalchemy.
+2025-11-22 17:28:32,992 — ERROR — ETL failed: Query must be a string unless using sqlalchemy.
+Traceback (most recent call last):
+  File "/tmp/ipykernel_7238/926352943.py", line 397, in run_etl
+    (orders, items, refunds, sessions, pageviews, products, users) = extract(engine)
+                                                                     ~~~~~~~^^^^^^^^
+  File "/tmp/ipykernel_7238/926352943.py", line 90, in extract
+    df_orders = safe_read_sql(SQL_ORDERS, conn)
+  File "/tmp/ipykernel_7238/926352943.py", line 77, in safe_read_sql
+    return pd.read_sql_query(text(sql), conn)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/pandas/io/sql.py", line 528, in read_sql_query
+    return pandas_sql.read_query(
+           ~~~~~~~~~~~~~~~~~~~~~^
+        sql,
+        ^^^^
+    ...<6 lines>...
+        dtype_backend=dtype_backend,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/pandas/io/sql.py", line 2728, in read_query
+    cursor = self.execute(sql, params)
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/pandas/io/sql.py", line 2660, in execute
+    raise TypeError("Query must be a string unless using sqlalchemy.")
+TypeError: Query must be a string unless using sqlalchemy.
+2025-11-22 17:30:06,220 — INFO — ETL started.
+2025-11-22 17:30:06,226 — INFO — Creating DB engine.
+2025-11-22 17:30:06,235 — INFO — Starting data extraction.
+2025-11-22 17:30:06,249 — ERROR — Failed to read SQL: SELECT * FROM orders;
+Traceback (most recent call last):
+  File "/tmp/ipykernel_7238/774972668.py", line 77, in safe_read_sql
+    return pd.read_sql_query(sql, conn)   # <-- FIXED
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/pandas/io/sql.py", line 528, in read_sql_query
+    return pandas_sql.read_query(
+           ~~~~~~~~~~~~~~~~~~~~~^
+        sql,
+        ^^^^
+    ...<6 lines>...
+        dtype_backend=dtype_backend,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/pandas/io/sql.py", line 2728, in read_query
+    cursor = self.execute(sql, params)
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/pandas/io/sql.py", line 2662, in execute
+    cur = self.con.cursor()
+          ^^^^^^^^^^^^^^^
+AttributeError: 'Connection' object has no attribute 'cursor'
+2025-11-22 17:30:06,257 — ERROR — ETL failed: 'Connection' object has no attribute 'cursor'
+Traceback (most recent call last):
+  File "/tmp/ipykernel_7238/774972668.py", line 397, in run_etl
+    (orders, items, refunds, sessions, pageviews, products, users) = extract(engine)
+                                                                     ~~~~~~~^^^^^^^^
+  File "/tmp/ipykernel_7238/774972668.py", line 90, in extract
+    df_orders = safe_read_sql(SQL_ORDERS, conn)
+  File "/tmp/ipykernel_7238/774972668.py", line 77, in safe_read_sql
+    return pd.read_sql_query(sql, conn)   # <-- FIXED
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/pandas/io/sql.py", line 528, in read_sql_query
+    return pandas_sql.read_query(
+           ~~~~~~~~~~~~~~~~~~~~~^
+        sql,
+        ^^^^
+    ...<6 lines>...
+        dtype_backend=dtype_backend,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/pandas/io/sql.py", line 2728, in read_query
+    cursor = self.execute(sql, params)
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/pandas/io/sql.py", line 2662, in execute
+    cur = self.con.cursor()
+          ^^^^^^^^^^^^^^^
+AttributeError: 'Connection' object has no attribute 'cursor'
+2025-11-22 17:32:35,895 — INFO — ETL started.
+2025-11-22 17:32:35,902 — INFO — Creating DB engine.
+2025-11-22 17:32:35,906 — INFO — Starting data extraction.
+2025-11-22 17:32:35,920 — ERROR — Failed to read SQL: SELECT * FROM orders;
+Traceback (most recent call last):
+  File "/tmp/ipykernel_7238/1309356195.py", line 77, in safe_read_sql
+    return pd.read_sql_query(sql, conn)   # <-- FIXED
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/pandas/io/sql.py", line 528, in read_sql_query
+    return pandas_sql.read_query(
+           ~~~~~~~~~~~~~~~~~~~~~^
+        sql,
+        ^^^^
+    ...<6 lines>...
+        dtype_backend=dtype_backend,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/pandas/io/sql.py", line 2728, in read_query
+    cursor = self.execute(sql, params)
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/pandas/io/sql.py", line 2662, in execute
+    cur = self.con.cursor()
+          ^^^^^^^^^^^^^^^
+AttributeError: 'Engine' object has no attribute 'cursor'
+2025-11-22 17:32:35,935 — ERROR — ETL failed: 'Engine' object has no attribute 'cursor'
+Traceback (most recent call last):
+  File "/tmp/ipykernel_7238/1309356195.py", line 396, in run_etl
+    (orders, items, refunds, sessions, pageviews, products, users) = extract(engine)
+                                                                     ~~~~~~~^^^^^^^^
+  File "/tmp/ipykernel_7238/1309356195.py", line 89, in extract
+    df_orders   = safe_read_sql(SQL_ORDERS, engine)
+  File "/tmp/ipykernel_7238/1309356195.py", line 77, in safe_read_sql
+    return pd.read_sql_query(sql, conn)   # <-- FIXED
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/pandas/io/sql.py", line 528, in read_sql_query
+    return pandas_sql.read_query(
+           ~~~~~~~~~~~~~~~~~~~~~^
+        sql,
+        ^^^^
+    ...<6 lines>...
+        dtype_backend=dtype_backend,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/pandas/io/sql.py", line 2728, in read_query
+    cursor = self.execute(sql, params)
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/pandas/io/sql.py", line 2662, in execute
+    cur = self.con.cursor()
+          ^^^^^^^^^^^^^^^
+AttributeError: 'Engine' object has no attribute 'cursor'
+2025-11-22 17:33:24,497 — INFO — ETL started.
+2025-11-22 17:33:24,501 — INFO — Creating DB engine.
+2025-11-22 17:33:24,505 — INFO — Starting data extraction.
+2025-11-22 17:33:24,510 — ERROR — Failed to read SQL: SELECT * FROM orders;
+Traceback (most recent call last):
+  File "/tmp/ipykernel_7238/3833301416.py", line 76, in safe_read_sql
+    return pd.read_sql_query(sql, engine)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/pandas/io/sql.py", line 528, in read_sql_query
+    return pandas_sql.read_query(
+           ~~~~~~~~~~~~~~~~~~~~~^
+        sql,
+        ^^^^
+    ...<6 lines>...
+        dtype_backend=dtype_backend,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/pandas/io/sql.py", line 2728, in read_query
+    cursor = self.execute(sql, params)
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/pandas/io/sql.py", line 2662, in execute
+    cur = self.con.cursor()
+          ^^^^^^^^^^^^^^^
+AttributeError: 'Engine' object has no attribute 'cursor'
+2025-11-22 17:33:24,517 — ERROR — ETL failed: 'Engine' object has no attribute 'cursor'
+Traceback (most recent call last):
+  File "/tmp/ipykernel_7238/3833301416.py", line 395, in run_etl
+    (orders, items, refunds, sessions, pageviews, products, users) = extract(engine)
+                                                                     ~~~~~~~^^^^^^^^
+  File "/tmp/ipykernel_7238/3833301416.py", line 88, in extract
+    df_orders   = safe_read_sql(SQL_ORDERS, engine)
+  File "/tmp/ipykernel_7238/3833301416.py", line 76, in safe_read_sql
+    return pd.read_sql_query(sql, engine)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/pandas/io/sql.py", line 528, in read_sql_query
+    return pandas_sql.read_query(
+           ~~~~~~~~~~~~~~~~~~~~~^
+        sql,
+        ^^^^
+    ...<6 lines>...
+        dtype_backend=dtype_backend,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/pandas/io/sql.py", line 2728, in read_query
+    cursor = self.execute(sql, params)
+  File "/home/jeremy/miniconda3/envs/sql_env/lib/python3.13/site-packages/pandas/io/sql.py", line 2662, in execute
+    cur = self.con.cursor()
+          ^^^^^^^^^^^^^^^
+AttributeError: 'Engine' object has no attribute 'cursor'
